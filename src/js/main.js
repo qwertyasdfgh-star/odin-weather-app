@@ -117,26 +117,28 @@ const generateDetailsHTML = (weatherData) => `
 
 // Generate HTML for hourly forecast
 const generateHourlyHTML = (weatherData, isFahrenheit = false) => {
-    const currentHour = new Date().getHours();
-    const filteredHourly = weatherData.hourly.filter((_, index) => index >= currentHour);
+    const hourlyArray = weatherData.hourly || [];
     
     return `
     <div class="hourly-forecast">
         <h3>Hourly Forecast</h3>
         <div class="hourly-scroll">
-            ${filteredHourly.map((hour, index) => {
-                const forecastHour = (currentHour + index) % 24;
-                const isCurrentHour = index === 0; // Check if this is the current hour
+            ${hourlyArray.map((hour, index) => {
+                const date = hour.dt ? new Date(hour.dt * 1000) : new Date(Date.now() + index * 3600 * 1000);
+                const forecastHour = String(date.getHours()).padStart(2, '0');
+                const isCurrentHour = index === 0;
+                const precip = hour.precipitation ?? hour.pop ?? 0;
+                const iconClass = hour.icon || getWeatherIcon(hour.conditions || '');
                 return `
                     <div class="hour-item ${isCurrentHour ? 'current-hour' : ''}">
                         <div class="hour-time">${forecastHour}:00</div>
                         <div class="hour-temp">${convertTemp(hour.temp, isFahrenheit)}°${isFahrenheit ? 'F' : 'C'}</div>
-                        <div class="hour-precip">${hour.precipitation}%</div>
+                        <div class="hour-precip">${precip}%</div>
                         <div class="hour-conditions">
-                            <i class="wi ${hour.icon}"></i>
+                            <i class="wi ${iconClass}"></i>
                         </div>
                         <div class="hour-wind">
-                            ${hour.windSpeed} km/h
+                            ${hour.windSpeed ?? 0} km/h
                         </div>
                     </div>
                 `;
@@ -144,20 +146,6 @@ const generateHourlyHTML = (weatherData, isFahrenheit = false) => {
         </div>
     </div>
 `;
-};
-
-const formatTime = (datetime) => {
-    try {
-        const date = new Date(datetime);
-        return date.toLocaleTimeString('en-US', {
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: false
-        });
-    } catch (error) {
-        console.error('Error formatting time:', error);
-        return 'N/A';
-    }
 };
 
 const generateDailyHTML = (weatherData, isFahrenheit = false) => `
