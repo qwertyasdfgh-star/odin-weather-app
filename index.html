@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes, shrink-to-fit=no">
+    <title>Forecastify - Weather Forecast</title>
+    <link rel="icon" href="./src/images/logo.png" type="image/x-icon"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.12/css/weather-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.12/css/weather-icons-wind.min.css">
+    <link rel="stylesheet" href="./src/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <i class="wi wi-day-cloudy"></i>
+            <h1>Forecastify</h1>
+        </div>
+        <form id="weatherForm">
+            <input type="text" id="location" placeholder="Enter location..." required>
+            <div class="unit-toggle">
+                <span>°C</span>
+                <label class="switch">
+                    <input type="checkbox" id="unitToggle">
+                    <span class="slider round"></span>
+                </label>
+                <span>°F</span>
+            </div>
+            <button type="submit">Get Weather</button>
+        </form>
+        <div id="loading" class="loading hidden">Loading...</div>
+        <div id="error" class="error hidden"></div>
+        <div id="weather-display"></div>
+    </div>
+
+    <footer class="footer">
+        <p>Background Image: 
+    <a href="https://wallpapers.com/wallpapers/dark-galaxy-1920-x-1080-wallpaper-pw4864j1dsof78sl.html" class="text-cyan-400 hover:text-cyan-300 transition-colors" target="_blank">
+        Photo on wallpapers.com
+    </a>
+</p>
+    <script type="module" src="./src/js/main.js"></script>
+</body>
+</html>
